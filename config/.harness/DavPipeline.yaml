@@ -35,7 +35,7 @@ pipeline:
                                     image: maven:3.8.4-openjdk-17
                                     language: Java
                                     buildTool: Maven
-                                    args: test
+                                    args: test -DskipTests
                                     runOnlySelectedTests: true
                                     reports:
                                         type: JUnit
