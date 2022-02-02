@@ -13,21 +13,21 @@ pipeline:
                           - step:
                                 type: RunTests
                                 spec:
+                                    connectorRef: account.harnessImage
+                                    image: maven:3.8.4-openjdk-17
+                                    language: Java
+                                    buildTool: Maven
+                                    args: test
                                     runOnlySelectedTests: true
-                                    resources:
-                                        limits:
-                                            memory: 2Gi
-                                            cpu: "1"
                                     reports:
                                         type: JUnit
                                         spec:
                                             paths:
                                                 - "**/*.xml"
-                                    language: Java
-                                    image: maven:3.8.4-jdk-11
-                                    connectorRef: account.harnessImage
-                                    buildTool: Maven
-                                    args: test
+                                    resources:
+                                        limits:
+                                            memory: 2Gi
+                                            cpu: "1"
                                 name: Run tests
                                 identifier: Run_tests
                   cloneCodebase: true
