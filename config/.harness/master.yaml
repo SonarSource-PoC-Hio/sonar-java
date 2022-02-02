@@ -1,0 +1,14 @@
+inputSet:
+  identifier: "master"
+  pipeline:
+    identifier: "DavPipeline"
+    properties:
+      ci:
+        codebase:
+          build:
+            type: "branch"
+            spec:
+              branch: "master"
+  name: "master"
+  orgIdentifier: "default"
+  projectIdentifier: "SonarJava"
