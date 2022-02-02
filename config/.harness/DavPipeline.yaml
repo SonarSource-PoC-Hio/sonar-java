@@ -64,6 +64,31 @@ pipeline:
                   cloneCodebase: true
               name: Build
               identifier: Build
+        - stage:
+              name: IT
+              identifier: IT
+              type: CI
+              spec:
+                  cloneCodebase: true
+                  infrastructure:
+                      useFromStage: Build
+                  serviceDependencies:
+                      - identifier: mysql
+                        name: mysql
+                        type: Service
+                        spec:
+                            connectorRef: account.harnessImage
+                            image: mysql:5
+                  execution:
+                      steps:
+                          - step:
+                                type: Run
+                                name: CheckMySQL
+                                identifier: CheckMySQL
+                                spec:
+                                    connectorRef: account.harnessImage
+                                    image: alpine
+                                    command: curl http://localhost:3306
     properties:
         ci:
             codebase:
