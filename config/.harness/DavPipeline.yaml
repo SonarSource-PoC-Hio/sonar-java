@@ -30,26 +30,6 @@ pipeline:
                                             cpu: "1"
                                 name: Run tests
                                 identifier: Run_tests
-                          - step:
-                                type: RunTests
-                                spec:
-                                    connectorRef: account.harnessImage
-                                    image: maven:3.8.4-openjdk-17
-                                    language: Java
-                                    buildTool: Maven
-                                    args: test
-                                    runOnlySelectedTests: true
-                                    reports:
-                                        type: JUnit
-                                        spec:
-                                            paths:
-                                                - "**/*.xml"
-                                    resources:
-                                        limits:
-                                            memory: 2Gi
-                                            cpu: "1"
-                                name: Run tests again
-                                identifier: Run_tests_2
                   cloneCodebase: true
               name: Build
               identifier: Build
