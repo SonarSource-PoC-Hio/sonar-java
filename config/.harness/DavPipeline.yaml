@@ -49,6 +49,18 @@ pipeline:
                                 name: Run tests
                                 identifier: Run_tests
                           - step:
+                                type: Run
+                                name: Checks
+                                identifier: Checks
+                                spec:
+                                    connectorRef: account.harnessImage
+                                    image: bash:latest
+                                    command: |
+                                        pwd
+                                        ls -al
+                                        echo $HOME
+                                        ls -al $HOME
+                          - step:
                                 type: SaveCacheS3
                                 name: MavenCache
                                 identifier: MavenCache
