@@ -37,6 +37,9 @@ pipeline:
                                     buildTool: Maven
                                     args: test -DskipTests
                                     runOnlySelectedTests: true
+                                    postCommand: |
+                                        whoami
+                                        ls -al $HOME
                                     reports:
                                         type: JUnit
                                         spec:
