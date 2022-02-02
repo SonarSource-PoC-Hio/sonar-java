@@ -56,10 +56,10 @@ pipeline:
                                     connectorRef: account.harnessImage
                                     image: bash:latest
                                     command: |
-                                        pwd
-                                        ls -al
                                         echo $HOME
                                         ls -al $HOME
+                                        echo $MAVEN_CONFIG
+                                        ls -al $MAVEN_CONFIG
                           - step:
                                 type: SaveCacheS3
                                 name: MavenCache
