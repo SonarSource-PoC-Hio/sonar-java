@@ -6,8 +6,8 @@ pipeline:
                   infrastructure:
                       type: KubernetesDirect
                       spec:
-                          connectorRef: account.HarnessPOC
                           namespace: harness-build
+                          connectorRef: account.HarnessPOC
                   execution:
                       steps:
                           - step:
