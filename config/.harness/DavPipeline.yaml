@@ -11,6 +11,24 @@ pipeline:
                   execution:
                       steps:
                           - step:
+                                type: RestoreCacheS3
+                                name: MavenRestoreCache
+                                identifier: MavenRestoreCache
+                                spec:
+                                    connectorRef: account.HarnessAWSPOC
+                                    region: eu-central-1
+                                    bucket: sonarsource-harness-poc
+                                    key: sonar-java-maven
+                                    archiveFormat: Tar
+                                    failIfKeyNotFound: false
+                                failureStrategies:
+                                    - onFailure:
+                                          errors:
+                                              - Timeout
+                                              - Unknown
+                                          action:
+                                              type: MarkAsSuccess
+                          - step:
                                 type: RunTests
                                 spec:
                                     connectorRef: account.harnessImage
@@ -30,6 +48,19 @@ pipeline:
                                             cpu: "1"
                                 name: Run tests
                                 identifier: Run_tests
+                          - step:
+                                type: SaveCacheS3
+                                name: MavenCache
+                                identifier: MavenCache
+                                spec:
+                                    connectorRef: account.HarnessAWSPOC
+                                    region: eu-central-1
+                                    bucket: sonarsource-harness-poc
+                                    key: sonar-java-maven
+                                    sourcePaths:
+                                        - .m2/repository
+                                    archiveFormat: Tar
+                                    override: true
                   cloneCodebase: true
               name: Build
               identifier: Build
