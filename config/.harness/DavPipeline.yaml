@@ -62,7 +62,7 @@ pipeline:
                                         echo $HOME
                                         ls -al $HOME
                                         echo $MAVEN_CONFIG
-                                        ls -al $MAVEN_CONFIG
+                                        whoami
                           - step:
                                 type: SaveCacheS3
                                 name: MavenCache
@@ -73,7 +73,7 @@ pipeline:
                                     bucket: sonarsource-harness-poc
                                     key: sonar-java-maven
                                     sourcePaths:
-                                        - .m2/repository
+                                        - /root/.m2/repository
                                     archiveFormat: Tar
                                     override: true
                   cloneCodebase: true
