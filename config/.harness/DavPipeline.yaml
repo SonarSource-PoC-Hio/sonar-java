@@ -1,0 +1,47 @@
+pipeline:
+    name: DavPipeline
+    identifier: DavPipeline
+    allowStageExecutions: false
+    projectIdentifier: SonarJava
+    orgIdentifier: default
+    tags: {}
+    properties:
+        ci:
+            codebase:
+                connectorRef: account.HarnessSonarsourcePOC
+                repoName: sonar-java
+                build: <+input>
+    stages:
+        - stage:
+              name: Build
+              identifier: Build
+              type: CI
+              spec:
+                  cloneCodebase: true
+                  infrastructure:
+                      type: KubernetesDirect
+                      spec:
+                          connectorRef: account.HarnessPOC
+                          namespace: harness-build
+                  execution:
+                      steps:
+                          - step:
+                                type: RunTests
+                                name: Run tests
+                                identifier: Run_tests
+                                spec:
+                                    connectorRef: account.harnessImage
+                                    image: 3.8.4-jdk-11
+                                    language: Java
+                                    buildTool: Maven
+                                    args: test
+                                    runOnlySelectedTests: true
+                                    reports:
+                                        type: JUnit
+                                        spec:
+                                            paths:
+                                                - "**/*.xml"
+                                    resources:
+                                        limits:
+                                            memory: 8Gi
+                                            cpu: "4"
