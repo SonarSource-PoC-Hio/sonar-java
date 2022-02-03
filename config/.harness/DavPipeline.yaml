@@ -46,6 +46,8 @@ pipeline:
                                         mkdir -p CACHE_TESTS
                                         touch  CACHE_TESTS/file_1.txt
                                         touch  CACHE_TESTS/file_2.txt
+                                        ls -al /root/.m2
+                                        ls -al /root/.m2/repositories
                                     reports:
                                         type: JUnit
                                         spec:
