@@ -38,4 +38,10 @@ pipeline:
                                     language: Java
                                     buildTool: Maven
                                     args: test -DskipTests
-                                    runOnlySelectedTests: true
+                                    runOnlySelectedTests: false
+                                    resources:
+                                        limits:
+                                            memory: 2Gi
+                                            cpu: "1"
+                                failureStrategies: []
+              variables: []
