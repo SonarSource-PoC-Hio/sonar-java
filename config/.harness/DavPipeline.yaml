@@ -6,8 +6,8 @@ pipeline:
                   infrastructure:
                       type: KubernetesDirect
                       spec:
-                          namespace: harness-build
                           connectorRef: account.HarnessPOC
+                          namespace: harness-build
                   execution:
                       steps:
                           - step:
@@ -94,6 +94,8 @@ pipeline:
                                           action:
                                               type: MarkAsSuccess
                   cloneCodebase: true
+                  sharedPaths:
+                      - /root/.m2/repositories
               name: Build
               identifier: Build
         - stage:
