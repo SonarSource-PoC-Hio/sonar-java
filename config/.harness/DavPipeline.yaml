@@ -76,6 +76,12 @@ pipeline:
                                         - /root/.m2/repository
                                     archiveFormat: Tar
                                     override: true
+                                failureStrategies:
+                                    - onFailure:
+                                          errors:
+                                              - AllErrors
+                                          action:
+                                              type: MarkAsSuccess
                   cloneCodebase: true
               name: Build
               identifier: Build
