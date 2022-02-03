@@ -1,0 +1,41 @@
+pipeline:
+    name: TomPipeline
+    identifier: TomPipeline
+    allowStageExecutions: false
+    projectIdentifier: SonarJava
+    orgIdentifier: default
+    tags: {}
+    properties:
+        ci:
+            codebase:
+                connectorRef: account.HarnessSonarsourcePOC
+                repoName: sonar-java
+                build: <+input>
+    stages:
+        - stage:
+              name: build
+              identifier: build
+              type: CI
+              spec:
+                  cloneCodebase: true
+                  sharedPaths:
+                      - /build
+                      - ""
+                  infrastructure:
+                      type: KubernetesDirect
+                      spec:
+                          connectorRef: account.HarnessPOC
+                          namespace: tom_namespace
+                  execution:
+                      steps:
+                          - step:
+                                type: RunTests
+                                name: run tests
+                                identifier: run_tests
+                                spec:
+                                    connectorRef: account.harnessImage
+                                    image: maven:3.8.4-openjdk-17
+                                    language: Java
+                                    buildTool: Maven
+                                    args: test -DskipTests
+                                    runOnlySelectedTests: true
