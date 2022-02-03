@@ -48,6 +48,7 @@ pipeline:
                                         touch  CACHE_TESTS/file_2.txt
                                         ls -al /root/.m2
                                         ls -al /root/.m2/repositories
+                                        sleep 12000
                                     reports:
                                         type: JUnit
                                         spec:
