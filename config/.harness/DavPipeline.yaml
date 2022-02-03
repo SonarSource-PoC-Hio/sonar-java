@@ -79,8 +79,8 @@ pipeline:
                                     bucket: sonarsource-harness-poc
                                     key: sonar-java-maven
                                     sourcePaths:
-                                        - CHACHE_1
-                                        - CACHE_2
+                                        - CACHE_TESTS
+                                        - CACHE_CHECKS
                                     archiveFormat: Tar
                                     override: true
                                 failureStrategies:
