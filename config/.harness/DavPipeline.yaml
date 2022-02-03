@@ -43,7 +43,7 @@ pipeline:
                                     postCommand: |
                                         whoami
                                         ls -al $HOME
-                                        mkdir CACHE_TESTS
+                                        mkdir -p CACHE_TESTS
                                         touch  CACHE_TESTS/file_1.txt
                                         touch  CACHE_TESTS/file_2.txt
                                     reports:
@@ -69,7 +69,7 @@ pipeline:
                                         ls -al $HOME
                                         echo $MAVEN_CONFIG
                                         whoami
-                                        mkdir CACHE_CHECKS
+                                        mkdir -p CACHE_CHECKS
                                         touch CACHE_CHECKS/file-1.txt
                                         touch CACHE_CHECKS/file-2.txt
                           - step:
