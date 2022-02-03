@@ -115,8 +115,8 @@ pipeline:
                                 identifier: CheckMySQL
                                 spec:
                                     connectorRef: account.harnessImage
-                                    image: alpine
-                                    command: curl http://localhost:3306
+                                    image: bash
+                                    command: wget http://localhost:3306
     properties:
         ci:
             codebase:
