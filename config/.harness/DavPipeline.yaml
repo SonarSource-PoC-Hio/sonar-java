@@ -82,7 +82,7 @@ pipeline:
                                     bucket: sonarsource-harness-poc
                                     key: sonar-java-maven
                                     sourcePaths:
-                                        - .m2/repositories
+                                        - /root/.m2/repositories
                                         - CACHE_TESTS
                                         - CACHE_CHECKS
                                     archiveFormat: Tar
