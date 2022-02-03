@@ -37,6 +37,9 @@ pipeline:
                                     buildTool: Maven
                                     args: test -DskipTests
                                     runOnlySelectedTests: true
+                                    preCommand: |-
+                                        ls CACHE_TESTS
+                                        ls CACHE_CHECKS
                                     postCommand: |
                                         whoami
                                         ls -al $HOME
