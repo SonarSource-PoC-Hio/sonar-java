@@ -18,7 +18,7 @@ pipeline:
                                     connectorRef: account.HarnessAWSPOC
                                     region: eu-central-1
                                     bucket: sonarsource-harness-poc
-                                    key: sonar-java-maven
+                                    key: static-value
                                     archiveFormat: Tar
                                     failIfKeyNotFound: false
                                 failureStrategies:
@@ -47,8 +47,7 @@ pipeline:
                                         touch  CACHE_TESTS/file_1.txt
                                         touch  CACHE_TESTS/file_2.txt
                                         ls -al /root/.m2
-                                        ls -al /root/.m2/repositories
-                                        sleep 12000
+                                        ls -al /root/.m2/repository
                                     reports:
                                         type: JUnit
                                         spec:
@@ -85,7 +84,7 @@ pipeline:
                                     bucket: sonarsource-harness-poc
                                     key: static-value
                                     sourcePaths:
-                                        - /root/.m2/repositories
+                                        - /root/.m2/repository
                                         - CACHE_TESTS
                                         - CACHE_CHECKS
                                     archiveFormat: Tar
@@ -98,7 +97,7 @@ pipeline:
                                               type: MarkAsSuccess
                   cloneCodebase: true
                   sharedPaths:
-                      - /root/.m2/repositories
+                      - /root/.m2/repository
               name: Build
               identifier: Build
         - stage:
