@@ -80,7 +80,7 @@ pipeline:
                                     connectorRef: account.HarnessAWSPOC
                                     region: eu-central-1
                                     bucket: sonarsource-harness-poc
-                                    key: "{{ checksum /harness/pom.xml}}"
+                                    key: "{{ checksum pom.xml}}"
                                     sourcePaths:
                                         - /root/.m2/repositories
                                         - CACHE_TESTS
