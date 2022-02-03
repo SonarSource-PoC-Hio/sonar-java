@@ -40,6 +40,9 @@ pipeline:
                                     postCommand: |
                                         whoami
                                         ls -al $HOME
+                                        mkdir CACHE_TESTS
+                                        touch  CACHE_TESTS/file_1.txt
+                                        touch  CACHE_TESTS/file_2.txt
                                     reports:
                                         type: JUnit
                                         spec:
@@ -63,6 +66,9 @@ pipeline:
                                         ls -al $HOME
                                         echo $MAVEN_CONFIG
                                         whoami
+                                        mkdir CACHE_CHECKS
+                                        touch CACHE_CHECKS/file-1.txt
+                                        touch CACHE_CHECKS/file-2.txt
                           - step:
                                 type: SaveCacheS3
                                 name: MavenCache
@@ -73,7 +79,8 @@ pipeline:
                                     bucket: sonarsource-harness-poc
                                     key: sonar-java-maven
                                     sourcePaths:
-                                        - /root/.m2/repository
+                                        - CHACHE_1
+                                        - CACHE_2
                                     archiveFormat: Tar
                                     override: true
                                 failureStrategies:
