@@ -37,17 +37,10 @@ pipeline:
                                     buildTool: Maven
                                     args: test -DskipTests
                                     runOnlySelectedTests: true
-                                    preCommand: |-
-                                        ls CACHE_TESTS
-                                        ls CACHE_CHECKS
+                                    preCommand: |
+                                      whoami
                                     postCommand: |
                                         whoami
-                                        ls -al $HOME
-                                        mkdir -p CACHE_TESTS
-                                        touch  CACHE_TESTS/file_1.txt
-                                        touch  CACHE_TESTS/file_2.txt
-                                        ls -al /root/.m2
-                                        ls -al /root/.m2/repository
                                     reports:
                                         type: JUnit
                                         spec:
@@ -60,21 +53,6 @@ pipeline:
                                 name: Run tests
                                 identifier: Run_tests
                           - step:
-                                type: Run
-                                name: Checks
-                                identifier: Checks
-                                spec:
-                                    connectorRef: account.harnessImage
-                                    image: bash:latest
-                                    command: |
-                                        echo $HOME
-                                        ls -al $HOME
-                                        echo $MAVEN_CONFIG
-                                        whoami
-                                        mkdir -p CACHE_CHECKS
-                                        touch CACHE_CHECKS/file-1.txt
-                                        touch CACHE_CHECKS/file-2.txt
-                          - step:
                                 type: SaveCacheS3
                                 name: MavenCache
                                 identifier: MavenCache
@@ -85,8 +63,6 @@ pipeline:
                                     key: static-value
                                     sourcePaths:
                                         - /root/.m2/repository
-                                        - CACHE_TESTS
-                                        - CACHE_CHECKS
                                     archiveFormat: Tar
                                     override: true
                                 failureStrategies:
@@ -115,6 +91,8 @@ pipeline:
                         spec:
                             connectorRef: account.harnessImage
                             image: mysql:5
+                            envVariables:
+                                MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
                   execution:
                       steps:
                           - step:
