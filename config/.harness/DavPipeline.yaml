@@ -11,6 +11,15 @@ pipeline:
                   execution:
                       steps:
                           - step:
+                                type: Run
+                                name: Env
+                                identifier: Env
+                                spec:
+                                    connectorRef: account.harnessImage
+                                    image: bash
+                                    command: |
+                                        env
+                          - step:
                                 type: RestoreCacheS3
                                 name: MavenRestoreCache
                                 identifier: MavenRestoreCache
@@ -38,7 +47,7 @@ pipeline:
                                     args: test -DskipTests
                                     runOnlySelectedTests: true
                                     preCommand: |
-                                      whoami
+                                        whoami
                                     postCommand: |
                                         whoami
                                     reports:
