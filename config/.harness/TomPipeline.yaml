@@ -24,7 +24,7 @@ pipeline:
                       type: KubernetesDirect
                       spec:
                           connectorRef: account.HarnessPOC
-                          namespace: harness-build
+                          namespace: test-tom-ns
                   execution:
                       steps:
                           - step:
