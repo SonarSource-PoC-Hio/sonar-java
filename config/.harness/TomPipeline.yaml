@@ -20,7 +20,6 @@ pipeline:
                   cloneCodebase: true
                   sharedPaths:
                       - /build
-                      - ""
                   infrastructure:
                       type: KubernetesDirect
                       spec:
@@ -33,8 +32,8 @@ pipeline:
                                 name: run tests
                                 identifier: run_tests
                                 spec:
-                                    connectorRef: account.harnessImage
-                                    image: maven:3.8.4-openjdk-17
+                                    connectorRef: account.HarnessAWSPOC
+                                    image: ci-images:latest
                                     language: Java
                                     buildTool: Maven
                                     args: test -DskipTests
@@ -44,4 +43,3 @@ pipeline:
                                             memory: 2Gi
                                             cpu: "1"
                                 failureStrategies: []
-              variables: []
