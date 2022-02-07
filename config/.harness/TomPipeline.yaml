@@ -38,6 +38,7 @@ pipeline:
                                     buildTool: Maven
                                     args: test -DskipTests
                                     runOnlySelectedTests: false
+                                    runAsUser: "1000"
                                     resources:
                                         limits:
                                             memory: 2Gi
