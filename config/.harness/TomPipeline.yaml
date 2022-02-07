@@ -33,7 +33,7 @@ pipeline:
                                 identifier: run_tests
                                 spec:
                                     connectorRef: account.HarnessAWSPOC
-                                    image: ci-images:latest
+                                    image: ci-images
                                     language: Java
                                     buildTool: Maven
                                     args: test -DskipTests
