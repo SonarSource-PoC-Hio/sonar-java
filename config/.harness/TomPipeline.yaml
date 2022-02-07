@@ -38,6 +38,10 @@ pipeline:
                                     buildTool: Maven
                                     args: test -DskipTests
                                     runOnlySelectedTests: false
+                                    preCommand: |-
+                                        whoami
+                                        ls -al ~/
+                                        ls -al ~/.m2
                                     runAsUser: "1000"
                                     resources:
                                         limits:
