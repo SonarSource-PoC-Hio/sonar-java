@@ -19,7 +19,7 @@ pipeline:
               spec:
                   cloneCodebase: true
                   sharedPaths:
-                      - /build
+                      - /home/sonarsource/.m2
                   infrastructure:
                       type: KubernetesDirect
                       spec:
