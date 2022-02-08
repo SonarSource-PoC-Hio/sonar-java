@@ -32,9 +32,9 @@ pipeline:
                                 name: MavenRestoreCache
                                 identifier: MavenRestoreCache
                                 spec:
-                                    connectorRef: account.awsdev
+                                    connectorRef: account.HarnessAWSPOC
                                     region: eu-central-1
-                                    bucket: harness-cache-dev
+                                    bucket: sonarsource-harness-poc
                                     key: m2-repos
                                     archiveFormat: Tar
                                     failIfKeyNotFound: false
@@ -74,9 +74,9 @@ pipeline:
                                 name: MavenCache
                                 identifier: MavenCache
                                 spec:
-                                    connectorRef: account.awsdev
+                                    connectorRef: account.HarnessAWSPOC
                                     region: eu-central-1
-                                    bucket: harness-cache-dev
+                                    bucket: sonarsource-harness-poc
                                     key: m2-repos
                                     sourcePaths:
                                         - /home/sonarsource/.m2
