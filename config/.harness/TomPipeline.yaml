@@ -13,8 +13,8 @@ pipeline:
                 build: <+input>
     stages:
         - stage:
-              name: build
-              identifier: build
+              name: BUILD
+              identifier: BUILD
               type: CI
               spec:
                   cloneCodebase: true
@@ -57,9 +57,10 @@ pipeline:
                                     args: test -DskipTests
                                     runOnlySelectedTests: false
                                     preCommand: |-
+                                        source harness-env
                                         echo "================== Dumping env vars ===============>"
                                         env
-                                        echo "================ End of env vars dump =============>"
+                                        echo "================ End of env vars dump =============>"                                        
                                     postCommand: |-
                                         ls -al ~/
                                         ls -alr ~/.m2                            
