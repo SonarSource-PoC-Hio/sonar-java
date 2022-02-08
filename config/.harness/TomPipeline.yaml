@@ -59,6 +59,7 @@ pipeline:
                                         env
                                         echo "================ End of env vars dump =============>"     
                                         regular_mvn_build_deploy_analyze
+                                failureStrategies: []
                           - step:
                                 type: RunTests
                                 name: run tests
@@ -113,3 +114,6 @@ pipeline:
         - name: PROJECT
           type: String
           value: sonar-java
+        - name: SONAR_HOST_URL
+          type: String
+          value: https://sonarcloud.io
