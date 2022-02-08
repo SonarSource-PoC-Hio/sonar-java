@@ -28,26 +28,23 @@ pipeline:
                   execution:
                       steps:
                           - step:
-                                type: RunTests
-                                name: maven version
-                                identifier: maven_version
+                                type: RestoreCacheS3
+                                name: MavenRestoreCache
+                                identifier: MavenRestoreCache
                                 spec:
-                                    connectorRef: account.HarnessAWSPOC
-                                    image: 460386131003.dkr.ecr.eu-central-1.amazonaws.com/ci-images:latest
-                                    language: Java
-                                    buildTool: Maven
-                                    args: --version
-                                    runOnlySelectedTests: false
-                                    preCommand: |-
-                                        whoami
-                                        ls -al ~/
-                                        ls -al ~/.m2
-                                    runAsUser: "1000"
-                                    resources:
-                                        limits:
-                                            memory: 2Gi
-                                            cpu: "1"
-                                failureStrategies: []
+                                    connectorRef: account.awsdev
+                                    region: eu-central-1
+                                    bucket: harness-cache-dev
+                                    key: static-value
+                                    archiveFormat: Tar
+                                    failIfKeyNotFound: false
+                                failureStrategies:
+                                    - onFailure:
+                                          errors:
+                                              - Timeout
+                                              - Unknown
+                                          action:
+                                              type: MarkAsSuccess
                           - step:
                                 type: RunTests
                                 name: run tests
@@ -72,3 +69,22 @@ pipeline:
                                             memory: 2Gi
                                             cpu: "1"
                                 failureStrategies: []
+                          - step:
+                                type: SaveCacheS3
+                                name: MavenCache
+                                identifier: MavenCache
+                                spec:
+                                    connectorRef: account.awsdev
+                                    region: eu-central-1
+                                    bucket: harness-cache-dev
+                                    key: static-value
+                                    sourcePaths:
+                                        - /root/.m2/repository
+                                    archiveFormat: Tar
+                                    override: true
+                                failureStrategies:
+                                    - onFailure:
+                                          errors:
+                                              - AllErrors
+                                          action:
+                                              type: MarkAsSuccess
