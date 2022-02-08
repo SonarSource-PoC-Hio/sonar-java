@@ -6,7 +6,7 @@ pipeline:
                   infrastructure:
                       type: KubernetesDirect
                       spec:
-                          connectorRef: account.HarnessPOC
+                          connectorRef: account.k8sdev
                           namespace: harness-build
                   execution:
                       steps:
@@ -24,7 +24,7 @@ pipeline:
                                 name: MavenRestoreCache
                                 identifier: MavenRestoreCache
                                 spec:
-                                    connectorRef: account.HarnessAWSPOC
+                                    connectorRef: account.awsdev
                                     region: eu-central-1
                                     bucket: sonarsource-harness-poc
                                     key: static-value
@@ -66,7 +66,7 @@ pipeline:
                                 name: MavenCache
                                 identifier: MavenCache
                                 spec:
-                                    connectorRef: account.HarnessAWSPOC
+                                    connectorRef: account.awsdev
                                     region: eu-central-1
                                     bucket: sonarsource-harness-poc
                                     key: static-value
