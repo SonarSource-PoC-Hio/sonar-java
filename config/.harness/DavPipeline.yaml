@@ -26,7 +26,7 @@ pipeline:
                                 spec:
                                     connectorRef: account.awsdev
                                     region: eu-central-1
-                                    bucket: sonarsource-harness-poc
+                                    bucket: harness-cache-dev
                                     key: static-value
                                     archiveFormat: Tar
                                     failIfKeyNotFound: false
@@ -68,7 +68,7 @@ pipeline:
                                 spec:
                                     connectorRef: account.awsdev
                                     region: eu-central-1
-                                    bucket: sonarsource-harness-poc
+                                    bucket: harness-cache-dev
                                     key: static-value
                                     sourcePaths:
                                         - /root/.m2/repository
