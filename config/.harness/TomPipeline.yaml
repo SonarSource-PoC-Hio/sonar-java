@@ -57,6 +57,9 @@ pipeline:
                                     args: test -DskipTests
                                     runOnlySelectedTests: false
                                     preCommand: |-
+                                        ls -al ~/
+                                        ls -alr ~/.m2
+
                                         source harness-env
                                         echo "================== Dumping env vars ===============>"
                                         env
