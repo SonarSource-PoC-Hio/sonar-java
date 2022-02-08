@@ -35,7 +35,7 @@ pipeline:
                                     connectorRef: account.awsdev
                                     region: eu-central-1
                                     bucket: harness-cache-dev
-                                    key: static-value
+                                    key: m2-repos
                                     archiveFormat: Tar
                                     failIfKeyNotFound: false
                                 failureStrategies:
@@ -77,9 +77,9 @@ pipeline:
                                     connectorRef: account.awsdev
                                     region: eu-central-1
                                     bucket: harness-cache-dev
-                                    key: static-value
+                                    key: m2-repos
                                     sourcePaths:
-                                        - /root/.m2/repository
+                                        - /home/sonarsource/.m2
                                     archiveFormat: Tar
                                     override: true
                                 failureStrategies:
