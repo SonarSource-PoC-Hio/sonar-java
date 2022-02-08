@@ -52,6 +52,10 @@ pipeline:
                                 spec:
                                     connectorRef: account.HarnessAWSPOC
                                     image: 460386131003.dkr.ecr.eu-central-1.amazonaws.com/ci-images:latest
+                                    envVariables:
+                                        SONAR_HOST_URL: <+pipeline.variables.SONAR_HOST_URL>
+                                        PROJECT: sonar-java
+                                        GITHUB_REPO: SonarSource-PoC-Hio/sonar-java
                                     command: |-
                                         ls -alr ~/.m2
                                         source harness-env
