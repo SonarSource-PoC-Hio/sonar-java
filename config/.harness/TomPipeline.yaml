@@ -29,6 +29,27 @@ pipeline:
                       steps:
                           - step:
                                 type: RunTests
+                                name: maven version
+                                identifier: maven_version
+                                spec:
+                                    connectorRef: account.HarnessAWSPOC
+                                    image: 460386131003.dkr.ecr.eu-central-1.amazonaws.com/ci-images:latest
+                                    language: Java
+                                    buildTool: Maven
+                                    args: --version
+                                    runOnlySelectedTests: false
+                                    preCommand: |-
+                                        whoami
+                                        ls -al ~/
+                                        ls -al ~/.m2
+                                    runAsUser: "1000"
+                                    resources:
+                                        limits:
+                                            memory: 2Gi
+                                            cpu: "1"
+                                failureStrategies: []
+                          - step:
+                                type: RunTests
                                 name: run tests
                                 identifier: run_tests
                                 spec:
@@ -42,6 +63,9 @@ pipeline:
                                         whoami
                                         ls -al ~/
                                         ls -al ~/.m2
+                                    postCommand: |-
+                                        ls -al ~/
+                                        ls -alr ~/.m2                            
                                     runAsUser: "1000"
                                     resources:
                                         limits:
