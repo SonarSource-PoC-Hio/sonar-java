@@ -89,3 +89,10 @@ pipeline:
                                               - AllErrors
                                           action:
                                               type: MarkAsSuccess
+    variables:
+        - name: GITHUB_REPO
+          type: String
+          value: SonarSource-PoC-Hio/sonar-java
+        - name: PROJECT
+          type: String
+          value: sonar-java
