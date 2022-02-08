@@ -57,9 +57,9 @@ pipeline:
                                     args: test -DskipTests
                                     runOnlySelectedTests: false
                                     preCommand: |-
-                                        whoami
-                                        ls -al ~/
-                                        ls -al ~/.m2
+                                        echo "================== Dumping env vars ===============>"
+                                        env
+                                        echo "================ End of env vars dump =============>"
                                     postCommand: |-
                                         ls -al ~/
                                         ls -alr ~/.m2                            
