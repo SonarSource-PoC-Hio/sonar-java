@@ -52,6 +52,13 @@ pipeline:
                                 spec:
                                     connectorRef: account.HarnessAWSPOC
                                     image: 460386131003.dkr.ecr.eu-central-1.amazonaws.com/ci-images:latest
+                                    command: |-
+                                        ls -alr ~/.m2
+                                        source harness-env
+                                        echo "================== Dumping env vars ===============>"
+                                        env
+                                        echo "================ End of env vars dump =============>"     
+                                        regular_mvn_build_deploy_analyze -DskipTests -Dsonar.organization=sonarsource
                                     envVariables:
                                         SONAR_HOST_URL: <+pipeline.variables.SONAR_HOST_URL>
                                         PROJECT: sonar-java
@@ -63,13 +70,6 @@ pipeline:
                                         ARTIFACTORY_DEPLOY_PASSWORD: <+secrets.getValue("account.ARTIFACTORY_DEPLOY_PASSWORD")>
                                         ARTIFACTORY_PRIVATE_USERNAME: <+secrets.getValue("account.ARTIFACTORY_PRIVATE_USERNAME")>
                                         ARTIFACTORY_PRIVATE_PASSWORD: <+secrets.getValue("account.ARTIFACTORY_PRIVATE_PASSWORD")>
-                                    command: |-
-                                        ls -alr ~/.m2
-                                        source harness-env
-                                        echo "================== Dumping env vars ===============>"
-                                        env
-                                        echo "================ End of env vars dump =============>"     
-                                        regular_mvn_build_deploy_analyze -DskipTests
                                 failureStrategies: []
                           - step:
                                 type: RunTests
