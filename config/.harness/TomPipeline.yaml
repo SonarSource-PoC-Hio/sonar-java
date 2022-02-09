@@ -69,7 +69,7 @@ pipeline:
                                         echo "================== Dumping env vars ===============>"
                                         env
                                         echo "================ End of env vars dump =============>"     
-                                        regular_mvn_build_deploy_analyze
+                                        regular_mvn_build_deploy_analyze -DskipTests
                                 failureStrategies: []
                           - step:
                                 type: RunTests
