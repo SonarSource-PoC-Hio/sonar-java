@@ -58,7 +58,7 @@ pipeline:
                                         echo "================== Dumping env vars ===============>"
                                         env
                                         echo "================ End of env vars dump =============>"     
-                                        regular_mvn_build_deploy_analyze -DskipTests -Dsonar.organization=sonarsource-poc-hio
+                                        mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=SonarSource-PoC-Hio_sonar-java -DskipTests -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=sonarsource-poc-hio
                                     envVariables:
                                         SONAR_HOST_URL: <+pipeline.variables.SONAR_HOST_URL>
                                         PROJECT: sonar-java
