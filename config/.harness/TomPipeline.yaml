@@ -58,9 +58,6 @@ pipeline:
                                         echo "================== Dumping env vars ===============>"
                                         env
                                         echo "================ End of env vars dump =============>"
-                                        CURRENT_VERSION=$(maven_expression "project.version")     
-                                        . set_maven_build_version "$BUILD_NUMBER"
-                                        export MAVEN_OPTS="-Xmx1536m -Xms128m"
                                         regular_mvn_build_deploy_analyze \
                                         -Dsonar.projectKey=SonarSource-PoC-Hio_sonar-java \
                                         -Dsonar.organization=sonarsource-poc-hio \
