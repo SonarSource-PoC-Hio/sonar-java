@@ -89,7 +89,7 @@ pipeline:
                                     bucket: sonarsource-harness-poc
                                     key: m2-repos
                                     sourcePaths:
-                                        - /home/sonarsource/.m2/repository
+                                        - /home/sonarsource/.m2
                                     archiveFormat: Tar
                                     override: true
                                 failureStrategies:
