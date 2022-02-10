@@ -19,7 +19,7 @@ pipeline:
               spec:
                   cloneCodebase: true
                   sharedPaths:
-                      - /home/sonarsource/.m2
+                      - /home/sonarsource/.m2/repository
                   infrastructure:
                       type: KubernetesDirect
                       spec:
@@ -38,6 +38,7 @@ pipeline:
                                     key: m2-repos
                                     archiveFormat: Tar
                                     failIfKeyNotFound: false
+                                    runAsUser: "1000"
                                 failureStrategies:
                                     - onFailure:
                                           errors:
@@ -75,6 +76,7 @@ pipeline:
                                         ARTIFACTORY_PRIVATE_PASSWORD: <+secrets.getValue("account.ARTIFACTORY_PRIVATE_PASSWORD")>
                                     outputVariables:
                                         - name: BUILD_NUMBER
+                                    runAsUser: "1000"
                                 failureStrategies: []
                           - step:
                                 type: SaveCacheS3
@@ -86,9 +88,10 @@ pipeline:
                                     bucket: sonarsource-harness-poc
                                     key: m2-repos
                                     sourcePaths:
-                                        - /home/sonarsource/.m2
+                                        - /home/sonarsource/.m2/repository
                                     archiveFormat: Tar
                                     override: true
+                                    runAsUser: "1000"
                                 failureStrategies:
                                     - onFailure:
                                           errors:
