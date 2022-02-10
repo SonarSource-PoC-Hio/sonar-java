@@ -1,0 +1,23 @@
+connector:
+  name: github-tom
+  identifier: githubtom
+  description:
+  orgIdentifier: default
+  projectIdentifier: SonarJava
+  type: Github
+  spec:
+    url: https://github.com/SonarSource-PoC-Hio
+    validationRepo: sonar-java
+    authentication:
+      type: Http
+      spec:
+        type: UsernameToken
+        spec:
+          username: tomverin
+          tokenRef: tomverin_github_pat
+    apiAccess:
+      type: Token
+      spec:
+        tokenRef: tomverin_github_pat
+    executeOnDelegate: false
+    type: Account
