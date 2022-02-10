@@ -61,7 +61,17 @@ pipeline:
                                         CURRENT_VERSION=$(maven_expression "project.version")     
                                         . set_maven_build_version "$BUILD_NUMBER"
                                         export MAVEN_OPTS="-Xmx1536m -Xms128m"
-                                        mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=SonarSource-PoC-Hio_sonar-java -DskipTests -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=sonarsource-poc-hio
+                                        mvn deploy sonar:sonar -Pcoverage,deploy-sonarsource,release,sign \
+                                        -Dsonar.projectKey=SonarSource-PoC-Hio_sonar-java \
+                                        -Dsonar.organization=sonarsource-poc-hio \
+                                        -DskipTests \
+                                        -Dsonar.host.url=https://sonarcloud.io 
+                                        -Dsonar.projectVersion="$CURRENT_VERSION" \
+                                        -Dsonar.analysis.buildNumber="$BUILD_NUMBER" \
+                                        -Dsonar.analysis.pipeline="$PIPELINE_ID" \
+                                        -Dsonar.analysis.sha1="$GIT_SHA1"  \
+                                        -Dsonar.analysis.repository="$GITHUB_REPO" \
+                                        -B -e -V "$@"
                                     envVariables:
                                         SONAR_HOST_URL: https://sonarcloud.io
                                         PROJECT: sonar-java
