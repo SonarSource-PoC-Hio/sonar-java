@@ -76,6 +76,8 @@ pipeline:
                                         ARTIFACTORY_DEPLOY_PASSWORD: <+secrets.getValue("account.ARTIFACTORY_DEPLOY_PASSWORD")>
                                         ARTIFACTORY_PRIVATE_USERNAME: <+secrets.getValue("account.ARTIFACTORY_PRIVATE_USERNAME")>
                                         ARTIFACTORY_PRIVATE_PASSWORD: <+secrets.getValue("account.ARTIFACTORY_PRIVATE_PASSWORD")>
+                                    outputVariables:
+                                        - name: BUILD_NUMBER
                                 failureStrategies: []
                           - step:
                                 type: SaveCacheS3
@@ -104,8 +106,10 @@ pipeline:
                                     connectorRef: account.harnessImage
                                     image: releases-docker.jfrog.io/jfrog/jfrog-cli-v2-jf
                                     command: |-
+                                        export BUILD_NUMBER=<+execution.steps.BUILD.output.outputVariables.BUILD_NUMBER>
+                                        echo $BUILD_NUMBER
                                         jf config import $REPOX_PROMOTER_CONFIG
-                                        jf rt bpr --status 'it-passed' <+pipeline.variables.PROJECT> poc-harness-builds
+                                        jf rt bpr --status 'it-passed' <+pipeline.variables.PROJECT> $BUILD_NUMBER poc-harness-builds
                                     envVariables:
                                         REPOX_PROMOTER_CONFIG: <+secrets.getValue("account.REPOX_PROMOTER_CONFIG")>
     variables:
@@ -114,7 +118,7 @@ pipeline:
           value: SonarSource-PoC-Hio/sonar-java
         - name: PROJECT
           type: String
-          value: sonar-java-poc
+          value: sonar-java
         - name: SONAR_HOST_URL
           type: String
           value: https://sonarcloud.io
