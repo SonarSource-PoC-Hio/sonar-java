@@ -70,7 +70,7 @@ pipeline:
                                         PROJECT: sonar-java
                                         GITHUB_REPO: SonarSource-PoC-Hio/sonar-java
                                         SONAR_TOKEN: <+secrets.getValue("SONAR_TOKEN")>
-                                        ARTIFACTORY_URL: https://repox.jfrog.io/
+                                        ARTIFACTORY_URL: https://repox.jfrog.io/repox
                                         ARTIFACTORY_DEPLOY_REPO: poc-harness-qa
                                         ARTIFACTORY_DEPLOY_USERNAME: <+secrets.getValue("account.ARTIFACTORY_DEPLOY_USERNAME")>
                                         ARTIFACTORY_DEPLOY_PASSWORD: <+secrets.getValue("account.ARTIFACTORY_DEPLOY_PASSWORD")>
