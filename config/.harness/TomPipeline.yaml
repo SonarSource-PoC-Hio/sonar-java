@@ -28,14 +28,6 @@ pipeline:
                   execution:
                       steps:
                           - step:
-                                type: Run
-                                name: promote
-                                identifier: promote
-                                spec:
-                                    connectorRef: account.harnessImage
-                                    image: releases-docker.jfrog.io/jfrog/jfrog-cli-v2-jf
-                                    command: jf -v
-                          - step:
                                 type: RestoreCacheS3
                                 name: MavenRestoreCache
                                 identifier: MavenRestoreCache
@@ -74,8 +66,8 @@ pipeline:
                                         -Dsonar.organization=sonarsource-poc-hio \
                                         -DskipTests 
                                     envVariables:
-                                        SONAR_HOST_URL: https://sonarcloud.io
-                                        PROJECT: sonar-java-poc
+                                        SONAR_HOST_URL: <+pipeline.variables.SONAR_HOST_URL>
+                                        PROJECT: <+pipeline.variables.PROJECT>
                                         GITHUB_REPO: SonarSource-PoC-Hio/sonar-java
                                         SONAR_TOKEN: <+secrets.getValue("SONAR_TOKEN")>
                                         ARTIFACTORY_URL: https://repox.jfrog.io/repox
@@ -104,13 +96,25 @@ pipeline:
                                               - AllErrors
                                           action:
                                               type: MarkAsSuccess
+                          - step:
+                                type: Run
+                                name: promote
+                                identifier: promote
+                                spec:
+                                    connectorRef: account.harnessImage
+                                    image: releases-docker.jfrog.io/jfrog/jfrog-cli-v2-jf
+                                    command: |-
+                                        jf config import $REPOX_PROMOTER_CONFIG
+                                        jf rt bpr --status 'it-passed' <+pipeline.variables.PROJECT> poc-harness-builds
+                                    envVariables:
+                                        REPOX_PROMOTER_CONFIG: <+secrets.getValue("account.REPOX_PROMOTER_CONFIG")>
     variables:
         - name: GITHUB_REPO
           type: String
           value: SonarSource-PoC-Hio/sonar-java
         - name: PROJECT
           type: String
-          value: sonar-java
+          value: sonar-java-poc
         - name: SONAR_HOST_URL
           type: String
           value: https://sonarcloud.io
