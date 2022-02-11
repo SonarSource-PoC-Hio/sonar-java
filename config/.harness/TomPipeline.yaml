@@ -120,6 +120,21 @@ pipeline:
                                         jf rt bpr --status 'it-passed' <+pipeline.variables.PROJECT> $BUILD_NUMBER $REPO
                                     envVariables:
                                         REPOX_PROMOTER_CONFIG: <+secrets.getValue("account.REPOX_PROMOTER_CONFIG")>
+                          - step:
+                                type: RunTests
+                                name: RULING
+                                identifier: RULING
+                                spec:
+                                    connectorRef: account.HarnessAWSPOC
+                                    image: 460386131003.dkr.ecr.eu-central-1.amazonaws.com/ci-images:latest
+                                    language: Java
+                                    buildTool: Maven
+                                    args: package -Pit-ruling -Dsonar.runtimeVersion=LATEST_RELEASE[8.9] -Dmaven.test.redirectTestOutputToFile=false -B -e -V -Dparallel=methods -DuseUnlimitedThreads=true
+                                    runOnlySelectedTests: true
+                                    preCommand: |-
+                                        harness-env QA
+                                        source set_maven_build_version $BUILD_NUMBER
+                                        cd its/ruling
     variables:
         - name: GITHUB_REPO
           type: String
