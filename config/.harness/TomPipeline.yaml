@@ -113,9 +113,9 @@ pipeline:
                                         echo $BUILD_NUMBER
                                         jf config import $REPOX_PROMOTER_CONFIG
                                         if [ -n "${DRONE_COMMIT_LINK:-}" ]; then  
-                                            export REPO=poc-harness-builds
-                                        else
                                             export REPO=poc-harness-dev
+                                        else
+                                            export REPO=poc-harness-builds
                                         fi
                                         jf rt bpr --status 'it-passed' <+pipeline.variables.PROJECT> $BUILD_NUMBER poc-harness-builds
                                     envVariables:
