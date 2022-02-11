@@ -75,6 +75,7 @@ pipeline:
                                         ARTIFACTORY_DEPLOY_PASSWORD: <+secrets.getValue("account.ARTIFACTORY_DEPLOY_PASSWORD")>
                                         ARTIFACTORY_PRIVATE_USERNAME: <+secrets.getValue("account.ARTIFACTORY_PRIVATE_USERNAME")>
                                         ARTIFACTORY_PRIVATE_PASSWORD: <+secrets.getValue("account.ARTIFACTORY_PRIVATE_PASSWORD")>
+                                        GITHUB_TOKEN: <+secrets.getValue("account.github_tomverin")>
                                     outputVariables:
                                         - name: BUILD_NUMBER
                                     runAsUser: "1000"
