@@ -118,6 +118,7 @@ pipeline:
                                             export REPO=poc-harness-builds
                                         fi
                                         jf rt bpr --status 'it-passed' <+pipeline.variables.PROJECT> $BUILD_NUMBER $REPO
+                                    envVariables:
                                         REPOX_PROMOTER_CONFIG: <+secrets.getValue("account.REPOX_PROMOTER_CONFIG")>
     variables:
         - name: GITHUB_REPO
