@@ -133,7 +133,7 @@ pipeline:
                                     runOnlySelectedTests: true
                                     preCommand: |-
                                         harness-env QA
-                                        source set_maven_build_version $BUILD_NUMBER
+                                        source set_maven_build_version <+execution.steps.BUILD.output.outputVariables.BUILD_NUMBER>
                                         cd its/ruling
     variables:
         - name: GITHUB_REPO
