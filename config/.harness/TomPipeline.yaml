@@ -24,7 +24,7 @@ pipeline:
                   infrastructure:
                       type: KubernetesDirect
                       spec:
-                          connectorRef: account.HarnessPOC
+                          connectorRef: account.k8sdev
                           namespace: harness-build
                   execution:
                       steps:
@@ -33,9 +33,9 @@ pipeline:
                                 name: MavenRestoreCache
                                 identifier: MavenRestoreCache
                                 spec:
-                                    connectorRef: account.HarnessAWSPOC
+                                    connectorRef: account.awsdev
                                     region: eu-central-1
-                                    bucket: sonarsource-harness-poc
+                                    bucket: harness-cache-dev
                                     key: m2-repos
                                     archiveFormat: Tar
                                     failIfKeyNotFound: false
@@ -52,8 +52,8 @@ pipeline:
                                 name: BUILD
                                 identifier: BUILD
                                 spec:
-                                    connectorRef: account.HarnessAWSPOC
-                                    image: 460386131003.dkr.ecr.eu-central-1.amazonaws.com/ci-images:latest
+                                    connectorRef: account.awsdev
+                                    image: 501215020883.dkr.ecr.eu-central-1.amazonaws.com/harness-images-dev:latest
                                     command: |-
                                         ls -alr ~/.m2
                                         echo "trigger type <+pipeline.triggerType>"
@@ -89,9 +89,9 @@ pipeline:
                                 name: MavenCache
                                 identifier: MavenCache
                                 spec:
-                                    connectorRef: account.HarnessAWSPOC
+                                    connectorRef: account.awsdev
                                     region: eu-central-1
-                                    bucket: sonarsource-harness-poc
+                                    bucket: harness-cache-dev
                                     key: m2-repos
                                     sourcePaths:
                                         - /home/sonarsource/.m2/repository
@@ -112,8 +112,9 @@ pipeline:
                                     connectorRef: account.harnessImage
                                     image: releases-docker.jfrog.io/jfrog/jfrog-cli-v2-jf
                                     command: |-
-                                        export BUILD_NUMBER=<+execution.steps.BUILD.output.outputVariables.BUILD_NUMBER>
-                                        echo $BUILD_NUMBER
+                                        #export BUILD_NUMBER=<+execution.steps.BUILD.output.outputVariables.BUILD_NUMBER>
+                                        export BUILD_NUMBER=<+pipeline.sequenceId>
+                                        echo $BUILD_NUMBER=<+pipeline.sequenceId>
                                         jf config import $REPOX_PROMOTER_CONFIG
                                         if [ -n "${DRONE_COMMIT_LINK:-}" ]; then  
                                             export REPO=poc-harness-dev
@@ -128,8 +129,8 @@ pipeline:
                                 name: RULING
                                 identifier: RULING
                                 spec:
-                                    connectorRef: account.HarnessAWSPOC
-                                    image: 460386131003.dkr.ecr.eu-central-1.amazonaws.com/ci-images:latest
+                                    connectorRef: account.awsdev
+                                    image: 501215020883.dkr.ecr.eu-central-1.amazonaws.com/harness-images-dev:latest
                                     language: Java
                                     buildTool: Maven
                                     args: package -Pit-ruling -Dsonar.runtimeVersion=LATEST_RELEASE[8.9] -Dmaven.test.redirectTestOutputToFile=false -B -e -V -Dparallel=methods -DuseUnlimitedThreads=true
@@ -153,8 +154,8 @@ pipeline:
                                 name: debug trigger
                                 identifier: debug_trigger
                                 spec:
-                                    connectorRef: account.HarnessAWSPOC
-                                    image: 460386131003.dkr.ecr.eu-central-1.amazonaws.com/ci-images:latest
+                                    connectorRef: account.awsdev
+                                    image: 501215020883.dkr.ecr.eu-central-1.amazonaws.com/harness-images-dev:latest
                                     command: |-
                                         echo "trigger type <+pipeline.triggerType>"
                                         echo "trigger name <+pipeline.triggeredBy.name>"
