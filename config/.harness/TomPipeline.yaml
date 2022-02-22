@@ -1,7 +1,7 @@
 pipeline:
     name: TomPipeline
     identifier: TomPipeline
-    allowStageExecutions: false
+    allowStageExecutions: true
     projectIdentifier: SonarJava
     orgIdentifier: default
     tags: {}
@@ -56,6 +56,9 @@ pipeline:
                                     image: 460386131003.dkr.ecr.eu-central-1.amazonaws.com/ci-images:latest
                                     command: |-
                                         ls -alr ~/.m2
+                                        echo "trigger type <+pipeline.triggerType>"
+                                        echo "trigger name <+pipeline.triggeredBy.name>"
+                                        echo "PR <+codebase.prNumber>"
                                         source harness-env
                                         echo "================== Dumping env vars ===============>"
                                         env
@@ -135,6 +138,29 @@ pipeline:
                                         harness-env QA
                                         source set_maven_build_version <+execution.steps.BUILD.output.outputVariables.BUILD_NUMBER>
                                         cd its/ruling
+        - stage:
+              name: IT
+              identifier: IT
+              type: CI
+              spec:
+                  cloneCodebase: true
+                  infrastructure:
+                      useFromStage: BUILD
+                  execution:
+                      steps:
+                          - step:
+                                type: Run
+                                name: debug trigger
+                                identifier: debug_trigger
+                                spec:
+                                    connectorRef: account.HarnessAWSPOC
+                                    image: 460386131003.dkr.ecr.eu-central-1.amazonaws.com/ci-images:latest
+                                    command: |-
+                                        echo "trigger type <+pipeline.triggerType>"
+                                        echo "trigger name <+pipeline.triggeredBy.name>"
+                                        echo "PR echo <+codebase.prNumber>"
+              when:
+                  pipelineStatus: Success
     variables:
         - name: GITHUB_REPO
           type: String
@@ -145,3 +171,7 @@ pipeline:
         - name: SONAR_HOST_URL
           type: String
           value: https://sonarcloud.io
+    flowControl:
+        barriers:
+            - name: IT
+              identifier: IT
