@@ -63,10 +63,10 @@ pipeline:
                                         echo "================== Dumping env vars ===============>"
                                         env
                                         echo "================ End of env vars dump =============>"
-                                        regular_mvn_build_deploy_analyze \
-                                        -Dsonar.projectKey=SonarSource-PoC-Hio_sonar-java \
-                                        -Dsonar.organization=sonarsource-poc-hio \
-                                        -DskipTests 
+                                        #regular_mvn_build_deploy_analyze \
+                                        #-Dsonar.projectKey=SonarSource-PoC-Hio_sonar-java \
+                                        #-Dsonar.organization=sonarsource-poc-hio \
+                                        #-DskipTests 
                                     envVariables:
                                         SONAR_HOST_URL: <+pipeline.variables.SONAR_HOST_URL>
                                         PROJECT: <+pipeline.variables.PROJECT>
@@ -144,9 +144,10 @@ pipeline:
                                     command: |-
                                         echo "trigger type <+pipeline.triggerType>"
                                         echo "trigger name <+pipeline.triggeredBy.name>"
-                                        echo "PR echo <+codebase.prNumber>"
+                                        echo "PR <+codebase.prNumber>"
               when:
                   pipelineStatus: Success
+                  condition: <+codebase.prNumber> != null
     variables:
         - name: GITHUB_REPO
           type: String
