@@ -52,7 +52,7 @@ pipeline:
                                 identifier: build
                                 template:
                                     templateRef: account.regular_mvn_build
-                                    versionLabel: Version1
+                                    versionLabel: Version2
                           - step:
                                 type: SaveCacheS3
                                 name: MavenCache
