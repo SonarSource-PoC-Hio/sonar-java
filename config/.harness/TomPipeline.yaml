@@ -92,6 +92,10 @@ pipeline:
                                         ARTIFACTORY_PRIVATE_PASSWORD: <+secrets.getValue("account.ARTIFACTORY_PRIVATE_PASSWORD")>
                                         GITHUB_TOKEN: <+secrets.getValue("account.github_tomverin")>
                                     shell: Bash
+                                    resources:
+                                        limits:
+                                            memory: 16Gi
+                                            cpu: "8"
                           - step:
                                 type: Run
                                 name: promote
