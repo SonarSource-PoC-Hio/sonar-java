@@ -81,16 +81,17 @@ pipeline:
                                     connectorRef: account.awsdev
                                     image: 501215020883.dkr.ecr.eu-central-1.amazonaws.com/harness-images-dev:latest
                                     command: |-
+                                        git submodule update --init
                                         source harness-env QA
                                         source set_maven_build_version <+execution.steps.BUILD.output.outputVariables.BUILD_NUMBER>
                                         cd its/ruling
                                         mvn package -Pit-ruling -Dsonar.runtimeVersion=LATEST_RELEASE[8.9] -Dmaven.test.redirectTestOutputToFile=false -B -e -V -Dparallel=methods -DuseUnlimitedThreads=true
-                                    shell: Bash
                                     envVariables:
                                         ARTIFACTORY_URL: https://repox.jfrog.io/repox
                                         ARTIFACTORY_PRIVATE_USERNAME: <+secrets.getValue("account.ARTIFACTORY_PRIVATE_USERNAME")>
                                         ARTIFACTORY_PRIVATE_PASSWORD: <+secrets.getValue("account.ARTIFACTORY_PRIVATE_PASSWORD")>
                                         GITHUB_TOKEN: <+secrets.getValue("account.github_tomverin")>
+                                    shell: Bash
                           - step:
                                 type: Run
                                 name: promote
