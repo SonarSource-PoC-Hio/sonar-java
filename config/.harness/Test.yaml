@@ -37,6 +37,7 @@ pipeline:
                                         echo $0
                                         ps
                                         cat /etc/passwd
+                                        . harness-env QA                
                           - step:
                                 type: Run
                                 name: test2
@@ -44,5 +45,5 @@ pipeline:
                                 spec:
                                     connectorRef: account.awsdev
                                     image: 501215020883.dkr.ecr.eu-central-1.amazonaws.com/harness-images-dev:latest
-                                    command: whoami
+                                    command: ". harness-env QA                "
                                     shell: Bash
