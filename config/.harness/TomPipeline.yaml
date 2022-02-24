@@ -55,6 +55,7 @@ pipeline:
                                     connectorRef: account.awsdev
                                     image: 501215020883.dkr.ecr.eu-central-1.amazonaws.com/harness-images-dev:latest
                                     command: |-
+                                        bash
                                         ls -alr ~/.m2
                                         echo "trigger type <+pipeline.triggerType>"
                                         echo "trigger name <+pipeline.triggeredBy.name>"
