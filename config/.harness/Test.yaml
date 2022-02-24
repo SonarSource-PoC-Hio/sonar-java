@@ -36,3 +36,12 @@ pipeline:
                                         echo $SHELL
                                         echo $0
                                         ps
+                          - step:
+                                type: Run
+                                name: test2
+                                identifier: test2
+                                spec:
+                                    connectorRef: account.awsdev
+                                    image: 501215020883.dkr.ecr.eu-central-1.amazonaws.com/harness-images-dev:latest
+                                    command: whoami
+                                    shell: Bash
