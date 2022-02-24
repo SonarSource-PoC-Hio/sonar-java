@@ -36,6 +36,7 @@ pipeline:
                                         echo $SHELL
                                         echo $0
                                         ps
+                                        cat /etc/passwd
                           - step:
                                 type: Run
                                 name: test2
