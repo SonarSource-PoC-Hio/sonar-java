@@ -48,44 +48,11 @@ pipeline:
                                           action:
                                               type: MarkAsSuccess
                           - step:
-                                type: Run
-                                name: BUILD
-                                identifier: BUILD
-                                spec:
-                                    connectorRef: account.awsdev
-                                    image: 501215020883.dkr.ecr.eu-central-1.amazonaws.com/harness-images-dev:latest
-                                    command: |-
-                                        ls -alr ~/.m2
-                                        echo "trigger type <+pipeline.triggerType>"
-                                        echo "trigger name <+pipeline.triggeredBy.name>"
-                                        echo "PR <+codebase.prNumber>"
-                                        source harness-env
-                                        echo "================== Dumping env vars ===============>"
-                                        env
-                                        echo "================ End of env vars dump =============>"
-                                        regular_mvn_build_deploy_analyze \
-                                        -Dsonar.projectKey=SonarSource-PoC-Hio_sonar-java \
-                                        -Dsonar.organization=sonarsource-poc-hio \
-                                        -DskipTests 
-                                    envVariables:
-                                        SONAR_HOST_URL: <+pipeline.variables.SONAR_HOST_URL>
-                                        PROJECT: <+pipeline.variables.PROJECT>
-                                        GITHUB_REPO: SonarSource-PoC-Hio/sonar-java
-                                        SONAR_TOKEN: <+secrets.getValue("SONAR_TOKEN")>
-                                        ARTIFACTORY_URL: https://repox.jfrog.io/repox
-                                        ARTIFACTORY_DEPLOY_REPO: poc-harness-qa
-                                        ARTIFACTORY_DEPLOY_USERNAME: <+secrets.getValue("account.ARTIFACTORY_DEPLOY_USERNAME")>
-                                        ARTIFACTORY_DEPLOY_PASSWORD: <+secrets.getValue("account.ARTIFACTORY_DEPLOY_PASSWORD")>
-                                        ARTIFACTORY_PRIVATE_USERNAME: <+secrets.getValue("account.ARTIFACTORY_PRIVATE_USERNAME")>
-                                        ARTIFACTORY_PRIVATE_PASSWORD: <+secrets.getValue("account.ARTIFACTORY_PRIVATE_PASSWORD")>
-                                        GITHUB_TOKEN: <+secrets.getValue("account.github_tomverin")>
-                                        DEPLOY_PULL_REQUEST: "true"
-                                    outputVariables:
-                                        - name: BUILD_NUMBER
-                                    imagePullPolicy: Always
-                                    shell: Bash
-                                    runAsUser: "1000"
-                                failureStrategies: []
+                                name: build
+                                identifier: build
+                                template:
+                                    templateRef: account.regular_mvn_build
+                                    versionLabel: Version1
                           - step:
                                 type: SaveCacheS3
                                 name: MavenCache
@@ -107,20 +74,23 @@ pipeline:
                                           action:
                                               type: MarkAsSuccess
                           - step:
-                                type: RunTests
-                                name: RULING
-                                identifier: RULING
+                                type: Run
+                                name: run-ruling
+                                identifier: runruling
                                 spec:
                                     connectorRef: account.awsdev
                                     image: 501215020883.dkr.ecr.eu-central-1.amazonaws.com/harness-images-dev:latest
-                                    language: Java
-                                    buildTool: Maven
-                                    args: package -Pit-ruling -Dsonar.runtimeVersion=LATEST_RELEASE[8.9] -Dmaven.test.redirectTestOutputToFile=false -B -e -V -Dparallel=methods -DuseUnlimitedThreads=true
-                                    runOnlySelectedTests: true
-                                    preCommand: |-
-                                        harness-env QA
+                                    command: |-
+                                        source harness-env QA
                                         source set_maven_build_version <+execution.steps.BUILD.output.outputVariables.BUILD_NUMBER>
                                         cd its/ruling
+                                        mvn package -Pit-ruling -Dsonar.runtimeVersion=LATEST_RELEASE[8.9] -Dmaven.test.redirectTestOutputToFile=false -B -e -V -Dparallel=methods -DuseUnlimitedThreads=true
+                                    shell: Bash
+                                    envVariables:
+                                        ARTIFACTORY_URL: https://repox.jfrog.io/repox
+                                        ARTIFACTORY_PRIVATE_USERNAME: <+secrets.getValue("account.ARTIFACTORY_PRIVATE_USERNAME")>
+                                        ARTIFACTORY_PRIVATE_PASSWORD: <+secrets.getValue("account.ARTIFACTORY_PRIVATE_PASSWORD")>
+                                        GITHUB_TOKEN: <+secrets.getValue("account.github_tomverin")>
                           - step:
                                 type: Run
                                 name: promote
