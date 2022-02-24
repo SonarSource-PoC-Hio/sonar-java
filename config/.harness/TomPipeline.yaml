@@ -59,7 +59,7 @@ pipeline:
                                         echo "trigger type <+pipeline.triggerType>"
                                         echo "trigger name <+pipeline.triggeredBy.name>"
                                         echo "PR <+codebase.prNumber>"
-                                        source harness-env
+                                        . harness-env
                                         echo "================== Dumping env vars ===============>"
                                         env
                                         echo "================ End of env vars dump =============>"
