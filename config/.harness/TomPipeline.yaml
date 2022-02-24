@@ -55,12 +55,11 @@ pipeline:
                                     connectorRef: account.awsdev
                                     image: 501215020883.dkr.ecr.eu-central-1.amazonaws.com/harness-images-dev:latest
                                     command: |-
-                                        bash
                                         ls -alr ~/.m2
                                         echo "trigger type <+pipeline.triggerType>"
                                         echo "trigger name <+pipeline.triggeredBy.name>"
                                         echo "PR <+codebase.prNumber>"
-                                        . harness-env
+                                        source harness-env
                                         echo "================== Dumping env vars ===============>"
                                         env
                                         echo "================ End of env vars dump =============>"
@@ -83,6 +82,8 @@ pipeline:
                                         DEPLOY_PULL_REQUEST: "true"
                                     outputVariables:
                                         - name: BUILD_NUMBER
+                                    imagePullPolicy: Always
+                                    shell: Bash
                                     runAsUser: "1000"
                                 failureStrategies: []
                           - step:
