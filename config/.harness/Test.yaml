@@ -37,7 +37,7 @@ pipeline:
                                         echo $0
                                         ps
                                         cat /etc/passwd
-                                        . harness-env QA                
+                                        git --version
                           - step:
                                 type: Run
                                 name: test2
