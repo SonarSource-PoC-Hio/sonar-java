@@ -79,7 +79,7 @@ pipeline:
                                 identifier: runruling
                                 spec:
                                     connectorRef: account.awsdev
-                                    image: 501215020883.dkr.ecr.eu-central-1.amazonaws.com/harness-images-dev:latest
+                                    image: 501215020883.dkr.ecr.eu-central-1.amazonaws.com/harness-images-dev:jdk11
                                     command: |-
                                         git submodule update --init
                                         source harness-env QA
