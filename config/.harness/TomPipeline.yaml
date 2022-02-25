@@ -94,8 +94,8 @@ pipeline:
                                     shell: Bash
                                     resources:
                                         limits:
-                                            memory: 16Gi
-                                            cpu: "8"
+                                            memory: 12Gi
+                                            cpu: "7"
                           - step:
                                 type: Run
                                 name: promote
