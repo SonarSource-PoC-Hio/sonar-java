@@ -86,6 +86,11 @@ pipeline:
                                         source set_maven_build_version <+execution.steps.BUILD.output.outputVariables.BUILD_NUMBER>
                                         cd its/ruling
                                         mvn package -Pit-ruling -Dsonar.runtimeVersion=LATEST_RELEASE[8.9] -Dmaven.test.redirectTestOutputToFile=false -B -e -V -Dparallel=methods -DuseUnlimitedThreads=true
+                                    reports:
+                                        type: JUnit
+                                        spec:
+                                            paths:
+                                                - "**/*.xml"
                                     envVariables:
                                         ARTIFACTORY_URL: https://repox.jfrog.io/repox
                                         ARTIFACTORY_PRIVATE_USERNAME: <+secrets.getValue("account.ARTIFACTORY_PRIVATE_USERNAME")>
